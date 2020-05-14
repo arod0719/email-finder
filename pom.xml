@@ -15,6 +15,7 @@
     <logback.version>1.2.3</logback.version>
     <surefire.version>3.0.0-M4</surefire.version>
     <assembler.version>3.1.0</assembler.version>
+    <mockito.version>2.23.4</mockito.version>
   </properties>
 
   <dependencies>
@@ -50,6 +51,12 @@
       <artifactId>jsoup</artifactId>
       <version>1.13.1</version>
     </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -70,6 +77,9 @@
         <configuration>
           <finalName>email-finder</finalName>
           <appendAssemblyId>false</appendAssemblyId>
+          <descriptors>
+            <descriptor>src/assembly/assembly.xml</descriptor>
+          </descriptors>
           <descriptorRefs>
             <descriptorRef>src</descriptorRef>
             <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -86,6 +96,25 @@
             <phase>package</phase>
             <goals>
               <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>package</phase>
+            <goals>
+              <goal>report</goal>
             </goals>
           </execution>
         </executions>
