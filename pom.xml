@@ -73,7 +73,7 @@
              2. a ZIP file containing the source code
         -->
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>${assembler.version}</version>
+        <version>3.1.0</version>
         <configuration>
           <finalName>email-finder</finalName>
           <appendAssemblyId>false</appendAssemblyId>
@@ -93,7 +93,7 @@
         <executions>
           <execution>
             <id>make-assembly</id>
-            <phase>package</phase>
+            <phase>verify</phase>
             <goals>
               <goal>single</goal>
             </goals>
