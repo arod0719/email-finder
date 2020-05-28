@@ -40,18 +40,37 @@ public class PageParserTest {
         Document doc = new PageFetcher().get(System.getProperty("user.dir") + "/src/test/resources/test.html");
         PageParser parser = new PageParser();
         Set<String> links = parser.findLinks(doc);
-        System.out.println(links);
-        assertTrue(links.size() == 3);
+        assertEquals(3, links.size());
     }
 
     @Test
-    @DisplayName("A test to ensure pageParser works properly without links")
-    void testPageParserNoLinks(){
-        String html = "<html><a href='/some/other/file.html'>my link</a></body></html>";
+    @DisplayName("A test to ensure pageParser works properly without emails")
+    void testPageParserNoEmails(){
+        String html = "<html><p>No Emails Here</p></body></html>";
         Document doc = Jsoup.parse(html);
         PageParser parser = new PageParser();
-        parser.findLinks(doc);
-        assertEquals(null,doc.getElementById("my link"));
+        Set<String> emails = parser.findEmails(doc);
+        assertEquals(0, emails.size());
+    }
+
+    @Test
+    @DisplayName("A test to ensure pageParser works properly without emails")
+    void testPageParserNoLinks(){
+        String html = "<html><p>No links Here</p></body></html>";
+        Document doc = Jsoup.parse(html);
+        PageParser parser = new PageParser();
+        Set<String> links = parser.findLinks(doc);
+        assertEquals(0, links.size());
+    }
+
+    @Test
+    @DisplayName("A test to ensure pageParser works properly without emails")
+    void testPageParserTest(){
+        String html = "https://facebook.com";
+        Document doc = Jsoup.parse(html);
+        PageParser parser = new PageParser();
+        Set<String> links = parser.findLinks(doc);
+        assertEquals(0, links.size());
     }
 
 

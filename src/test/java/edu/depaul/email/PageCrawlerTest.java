@@ -35,6 +35,28 @@ public class PageCrawlerTest {
     }
 
     @Test
+    @DisplayName("Tests that page crawler works for good links")
+    void testGoodLink() throws IOException {
+        StorageService storage = mock(StorageService.class);
+        PageCrawler crawler = new PageCrawler(storage);
+        String url= "https://alextest333.htmlsave.net";
+        crawler.crawl(url);
+        crawler.report();
+        assertEquals(2, crawler.getGoodLinks().size());
+    }
+
+    @Test
+    @DisplayName("Tests that page crawler works for bad links")
+    void testBadLink() throws IOException {
+        StorageService storage = mock(StorageService.class);
+        PageCrawler crawler = new PageCrawler(storage);
+        String url= "https://alextest333.htmlsave.net";
+        crawler.crawl(url);
+        crawler.report();
+        assertEquals(2, crawler.getBadLinks().size());
+    }
+
+    @Test
     @DisplayName("Tests PageCrawler construction without max emails given.")
     void testConstructorNoMaxEmails() {
         StorageService storage = mock(StorageService.class);

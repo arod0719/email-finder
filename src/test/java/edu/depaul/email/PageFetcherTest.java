@@ -6,6 +6,8 @@ import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +20,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PageFetcherTest {
 
+    @ParameterizedTest
+    @CsvFileSource(resources = "/websites.csv", numLinesToSkip = 1)
+    void validWebsiteParam(String website, String validity) {
+        PageFetcher test = new PageFetcher();
+        if (validity.equals("X"))
+            assertThrows(EmailFinderException.class, () -> test.getString(website));
+        else{
+           try{
+               test.getString(website);
+           }
+           catch(Exception e){
+               assertTrue(false);
+            }
+        }
+    }
 
     @Test
     @DisplayName("Page fetcher should throw an exception when an incorrect format url is given")
